@@ -1,0 +1,72 @@
+<div class="container mx-auto p-4">
+    <!-- Header Section -->
+    <header class="flex justify-between items-center mb-6">
+      <h1 class="text-3xl font-semibold text-gray-800">Clients</h1>
+      <input
+        type="text"
+        class="w-64 p-3 border rounded-md shadow-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        placeholder="Search clients by name or email"
+        [(ngModel)]="searchQuery"
+        (input)="searchClients()"
+      />
+    </header>
+  
+    <!-- Clients List Section -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+      <div
+        *ngFor="let client of paginatedClients"
+        class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg  transition-transform  hover:scale-105 duration-300 ease-in-out"
+      >
+        <h3 class="text-xl font-semibold text-gray-800">{{ client.username }}</h3>
+        <p class="text-gray-600 mt-2"><strong>Email:</strong> {{ client.email }}</p>
+        <p class="text-gray-600 mt-2"><strong>Created At:</strong> {{ client.createdAt | date: 'short' }}</p>
+  
+        <!-- Action Buttons -->
+        <div class="mt-4 flex space-x-4 text-sm">
+          <!-- Approve Button -->
+          <button
+            (click)="approveClient(client.id!)"
+            class="hover:text-green-600 text-green-500 p-2 rounded-md"
+          >
+            <i class="fas fa-check text-sm"></i> Approve
+          </button>
+          <!-- Block Button -->
+          <button
+            (click)="blockClient(client.id!)"
+            class="hover:text-yellow-600 text-yellow-500 p-2 rounded-md"
+          >
+            <i class="fas fa-ban text-sm"></i> Block
+          </button>
+          <!-- Delete Button -->
+          <button
+            (click)="deleteClient(client.id!)"
+            class="hover:text-red-600 text-red-500 p-2 rounded-md"
+          >
+            <i class="fas fa-trash-alt text-sm"></i> Delete
+          </button>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Pagination Section -->
+    <div class="flex justify-center items-center mt-8 space-x-4">
+      <button
+        (click)="previousPage()"
+        [disabled]="currentPage === 1"
+        class="px-4 py-2 bg-orange-500 text-white font-semibold rounded-md disabled:bg-gray-300 cursor-pointer transition duration-300 ease-in-out hover:bg-orange-800"
+      >
+        Previous
+      </button>
+      <span class="text-lg font-medium text-gray-800">
+        Page {{ currentPage }} of {{ totalPages }}
+      </span>
+      <button
+        (click)="nextPage()"
+        [disabled]="currentPage === totalPages"
+        class="px-4 py-2 bg-orange-500 text-white font-semibold rounded-md disabled:bg-gray-300 cursor-pointer transition duration-300 ease-in-out hover:bg-orange-800"
+      >
+        Next
+      </button>
+    </div>
+  </div>
+  

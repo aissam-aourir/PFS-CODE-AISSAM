@@ -1,0 +1,115 @@
+<div class="bg-white p-6 rounded-md shadow-md">
+  <div class="flex justify-between mb-4 w-full space-x-4">
+    <div class="flex space-x-4">
+      <select
+        [(ngModel)]="searchCriteria"
+        (change)="onCriteriaChange()"
+        class="border border-gray-300 rounded-md px-8 py-4 w-2/5 text-xl"
+      >
+        <option value="username">Username</option>
+        <option value="email">Email</option>
+        <option value="createdAt">Created At</option>
+        <option value="blocked">Blocked</option>
+      </select>
+      <input
+        type="text"
+        placeholder="Entrez votre recherche..."
+        class="border border-gray-300 rounded-md px-8 py-4 w-3/5 text-xl"
+        [(ngModel)]="searchQuery"
+        (ngModelChange)="onSearch()"
+      />
+    </div>
+    <button (click)="openSupplierModal()" class="bg-yellow-600 hover:bg-yellow-800 text-white px-4 py-2 rounded-md">
+      Add New Supplier
+    </button>
+  </div>
+
+  <app-new-supplier-modal
+    *ngIf="isSupplierModalOpen"
+    [isOpen]="isSupplierModalOpen"
+    (createSupplier)="addSupplier($event)"
+    (close)="closeSupplierModal()"
+  ></app-new-supplier-modal>
+
+  <div class="overflow-x-auto">
+    <table class="min-w-full bg-white">
+      <thead>
+      <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
+        <th class="py-3 px-6 text-left">Username</th>
+        <th class="py-3 px-6 text-left">Password</th>
+        <th class="py-3 px-6 text-left">Email</th>
+        <th class="py-3 px-6 text-left">Created At</th>
+        <th class="py-3 px-6 text-center">Actions</th>
+      </tr>
+      </thead>
+      <tbody class="text-gray-600 text-base font-light">
+      <tr *ngFor="let supplier of paginatedSuppliers" class="border-b border-gray-200 hover:bg-gray-100">
+        <td class="py-3 px-6 text-left">{{ supplier.username }}</td>
+        <td class="py-3 px-6 text-left">
+            <span
+              (click)="copyToClipboard(supplier.password)"
+              class="cursor-pointer text-blue-600 hover:underline"
+              title="Click to copy"
+            >
+              {{ supplier.password.slice(0, 10) }}...
+            </span>
+        </td>
+
+        <td class="py-3 px-6 text-left">{{ supplier.email }}</td>
+        <td class="py-3 px-6 text-left">{{ supplier.createdAt | date:'medium' }}</td>
+        <td class="py-3 px-6 text-center space-x-2">
+          <!-- Approve Button -->
+          <button (click)="approveSupplier(supplier.id!)" class="hover:text-green-600 text-green-500 p-2 rounded-md">
+            <i class="fas fa-check text-xl"></i> <!-- Approve -->
+          </button>
+
+          <!-- Toggle Block/Unblock Button -->
+          <button
+            (click)="toggleBlockStatus(supplier)"
+            class="p-2 rounded-md"
+            [ngClass]="supplier.blocked ? 'text-yellow-600 hover:text-yellow-800' : 'text-green-600 hover:text-green-800'"
+            [title]="supplier.blocked ? 'Unblock' : 'Block'"
+          >
+            <i [ngClass]="supplier.blocked ? 'fas fa-unlock' : 'fas fa-ban'" class="text-xl"></i>
+          </button>
+
+          <!-- Delete Button -->
+          <button (click)="deleteSupplier(supplier.id!)" class="hover:text-red-600 text-red-500 p-2 rounded-md">
+            <i class="fas fa-trash-alt text-xl"></i> <!-- Delete -->
+          </button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Pagination Controls -->
+  <div class="flex justify-center mt-6 space-x-2">
+    <button
+      (click)="prevPage()"
+      [disabled]="currentPage === 1"
+      class="px-3 py-1 rounded-md bg-gray-300 hover:bg-gray-400 disabled:opacity-50"
+    >
+      Prev
+    </button>
+
+    <ng-container *ngFor="let page of [].constructor(totalPages); let i = index">
+      <button
+        (click)="goToPage(i + 1)"
+        [class.bg-blue-500]="currentPage === (i + 1)"
+        [class.text-white]="currentPage === (i + 1)"
+        class="px-3 py-1 rounded-md bg-gray-300 hover:bg-gray-400"
+      >
+        {{ i + 1 }}
+      </button>
+    </ng-container>
+
+    <button
+      (click)="nextPage()"
+      [disabled]="currentPage === totalPages"
+      class="px-3 py-1 rounded-md bg-gray-300 hover:bg-gray-400 disabled:opacity-50"
+    >
+      Next
+    </button>
+  </div>
+</div>

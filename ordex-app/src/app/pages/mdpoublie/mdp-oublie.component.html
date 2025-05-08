@@ -1,0 +1,33 @@
+<div class="min-h-screen flex items-center justify-center bg-gray-50 px-4">
+  <div class="max-w-md w-full bg-white p-8 rounded-2xl shadow-lg">
+    <!-- Image en haut -->
+    <div class="flex justify-center mb-6">
+      <img src="assets/logo2.png" alt="Image de mot de passe oublié" class="max-w-xs h-auto rounded-lg" style="max-width: 90%; width: auto;" />
+    </div>
+
+    <h2 class="text-3xl font-bold text-center text-orange-500 mb-6">Réinitialiser votre mot de passe</h2>
+
+    <p class="text-center text-gray-600 mb-6">
+      Entrez votre adresse email pour recevoir un code de réinitialisation de mot de passe.
+    </p>
+
+    <!-- Formulaire de mot de passe oublié -->
+    <form [formGroup]="forgotPasswordForm" (ngSubmit)="handleForgotPassword()" class="space-y-5">
+      <div>
+        <label for="email" class="block text-gray-700 font-semibold mb-1">Adresse email</label>
+        <input type="email" id="email" formControlName="email"
+               class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-orange-400 focus:outline-none" />
+      </div>
+
+      <button type="submit"
+              class="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 rounded-lg transition">
+        Envoyer le code de réinitialisation
+      </button>
+    </form>
+
+    <p class="text-center text-gray-600 mt-6">
+      Vous vous souvenez de votre mot de passe ?
+      <a routerLink="/login" class="text-orange-500 font-semibold hover:underline">Se connecter</a>
+    </p>
+  </div>
+</div>

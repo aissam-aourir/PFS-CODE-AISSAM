@@ -1,0 +1,60 @@
+  <!-- Hero Section -->
+  <section id="home" class="relative bg-gray-100 py-20 text-center">
+    <div class="max-w-4xl mx-auto px-6">
+      <h1 class="text-5xl md:text-6xl font-bold text-gray-800 mb-6">Welcome to <span class="text-orange-500">Ordex</span></h1>
+      <p class="text-gray-600 text-lg mb-8">Your favorite marketplace for premium quality products.</p>
+      <a routerLink="/register" class="bg-orange-500 text-white px-6 py-3 rounded-full hover:bg-orange-600 transition">Start Shopping</a>
+    </div>
+
+    <img src="../../../assets/photo-ecome.jpg" alt="Shopping" class="w-full max-h-[95vh] object-cover mt-10 rounded-lg shadow-md">
+  </section>
+
+  <!-- About Us Section -->
+  <section id="About Ordex" class="py-20 px-6 md:px-20 bg-white">
+    <div class="flex flex-col md:flex-row items-center gap-10">
+      <div class="flex-1">
+        <img src="https://altaviawatch.com/wp-content/uploads/2022/09/Bricolage-1024x683.jpeg" alt="About Ordex" class="rounded-lg shadow-lg">
+      </div>
+      <div class="flex-1">
+        <h2 class="text-4xl font-bold text-gray-800 mb-6">About <span class="text-orange-500">Ordex</span></h2>
+        <p class="text-gray-600 mb-4">Ordex is built to simplify your construction shopping experience.
+          From bricks and concrete to wall paint, electrical supplies, and plumbing essentials, we bring all your building materials to your fingertips — with top-quality service and competitive prices.</p>
+        <p class="text-gray-600">We are driven by reliability, efficiency, and a passion for helping you build better. Explore Ordex and turn your construction and renovation projects into reality!</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Products Section -->
+  <section id="products" class="py-20 px-6 md:px-20 bg-gray-100">
+    <h2 class="text-4xl font-bold text-center text-gray-800 mb-10">Explore Our <span class="text-orange-500">Products</span></h2>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-4">
+        <div *ngFor="let product of products" class="border rounded-lg shadow-md p-4 flex flex-col items-center hover:shadow-lg transition">
+          <img [src]="product.imageURL" [alt]="product.name" class="h-40 w-40 object-cover mb-4 rounded-md">
+          <h2 class="text-lg font-semibold mb-2">{{ product.name }}</h2>
+          <p class="text-gray-700 font-bold mb-4">${{ product.price }}</p>
+          <button (click)="handleAddToCart(product)" class="bg-yellow-500 hover:bg-yellow-700 text-white p-3 rounded-full flex items-center justify-center">
+            Add to   <i class="fas fa-shopping-cart ml-2"></i>
+
+          </button>
+
+        </div>
+      </div>
+
+  </section>
+
+  <!-- Promotions / Testimonials Section -->
+  <section class="py-20 px-6 md:px-20 bg-white">
+    <h2 class="text-4xl font-bold text-center text-gray-800 mb-10">What Our <span class="text-orange-500">Customers</span> Say</h2>
+
+    <div class="flex flex-col md:flex-row gap-6 justify-center">
+      <div class="bg-gray-100 p-6 rounded-lg shadow-md text-center">
+        <p class="italic text-gray-600 mb-4">"Ordex made my shopping experience so easy and enjoyable. I love it!"</p>
+        <div class="text-orange-500 font-semibold">- Alice M.</div>
+      </div>
+      <div class="bg-gray-100 p-6 rounded-lg shadow-md text-center">
+        <p class="italic text-gray-600 mb-4">"Fast delivery, great products, and amazing support. Highly recommended!"</p>
+        <div class="text-orange-500 font-semibold">- David L.</div>
+      </div>
+    </div>
+  </section>

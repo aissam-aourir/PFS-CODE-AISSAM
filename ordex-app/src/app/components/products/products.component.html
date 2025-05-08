@@ -1,0 +1,127 @@
+<div class="bg-white p-6 rounded-md shadow-md">
+    <div class="flex justify-between mb-4 w-full">
+      <input
+        type="text"
+        placeholder="Search products..."
+        class="border border-gray-300 rounded-md px-4 py-2 w-1/3"
+      />
+    <div>
+      <button (click)="openCategoryModal()"  class="bg-yellow-500 hover:bg-yellow-800 text-white px-4 py-2 rounded-md  mr-4">
+        Categories
+    </button>
+    <button (click)="openModal()"  class="bg-yellow-600 hover:bg-yellow-800 text-white px-4 py-2 rounded-md">
+      Add New Product
+    </button>
+    </div>
+
+    
+      
+    </div>
+    <app-new-product-modal
+    *ngIf="isModalOpen"
+    [isOpen]="isModalOpen"
+    [categories]="categories"
+    (createProduct)="addProduct($event)"
+    (close)="closeModal()">
+  </app-new-product-modal>
+  <!-- Edit Product Modal -->
+<app-edit-product-modal
+*ngIf="isEditModalOpen"
+[isOpen]="isEditModalOpen"
+[product]="productToEdit"
+[categories]="categories"
+(updateProduct)="updateProduct($event)"
+(close)="closeEditModal()">
+</app-edit-product-modal>
+<app-category-modal
+  [isOpen]="isCategoryModalOpen"
+  [categories]="categories"
+  (close)="closeCategoryModal()"
+  (addCategory)="addCategory($event)"
+  (categoryDeleted)="deleteCategory($event)"> <!-- 🛠️ this will call ProductsComponent.deleteCategory -->
+</app-category-modal>
+
+
+
+    <div class="overflow-x-auto">
+      <table class="min-w-full bg-white">
+        <thead>
+          <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
+            <th class="py-3 px-6 text-left">Image</th>
+            <th class="py-3 px-6 text-left">Name</th>
+            <th class="py-3 px-6 text-left">Description</th>
+            <th class="py-3 px-6 text-left">Price</th>
+            <th class="py-3 px-6 text-left">Stock</th>
+            <th class="py-3 px-6 text-left">Category</th>
+            <th class="py-3 px-6 text-left">Status</th>
+            <th class="py-3 px-6 text-center">Actions</th>
+          </tr>
+        </thead>
+        <tbody class="text-gray-600 text-base font-light">
+          <tr *ngFor="let product of paginatedProducts" class="border-b border-gray-200 hover:bg-gray-100">
+            <td class="py-3 px-6 text-left">
+              <img [src]="product.imageURL" alt="Product Image" class="h-10 w-10 object-cover rounded-full">
+            </td>
+            <td class="py-3 px-6 text-left">{{ product.name }}</td>
+            <td class="py-3 px-6 text-left">{{ product.description }}</td>
+            <td class="py-3 px-6 text-left">{{ product.price | currency }}</td>
+            <td class="py-3 px-6 text-left">{{ product.stock }}</td>
+            <td class="py-3 px-6 text-left">{{ product.category.name }}</td>
+            <td class="py-3 px-6 text-left">
+              <span 
+                [ngClass]="{
+                  'bg-green-100 text-green-800': product.isValidByAdmin,
+                  'bg-yellow-100 text-yellow-800': !product.isValidByAdmin
+                }" 
+                class="px-3 py-1 text-sm font-medium rounded-full"
+              >
+                {{ product.isValidByAdmin ? 'Published' : 'Review Pending' }}
+              </span>
+            </td>
+            
+            <td class="py-3 px-6 text-center space-x-2">
+
+              <button (click)="openEditModal(product)" class="hover:text-green-600 text-green-500 p-2 rounded-md">
+                <i class="fas fa-edit text-xl"></i> <!-- Edit icon -->
+              </button>
+              <button (click)="deleteProduct(product.id)" class="hover:text-red-600 text-red-500 p-2 rounded-md">
+                <i class="fas fa-trash-alt text-xl"></i> <!-- Delete icon -->
+              </button>
+              
+               </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  
+    <!-- Pagination Controls -->
+    <div class="flex justify-center mt-6 space-x-2">
+      <button 
+        (click)="prevPage()" 
+        [disabled]="currentPage === 1"
+        class="px-3 py-1 rounded-md bg-gray-300 hover:bg-gray-400 disabled:opacity-50"
+      >
+        Prev
+      </button>
+  
+      <ng-container *ngFor="let page of [].constructor(totalPages); let i = index">
+        <button
+          (click)="goToPage(i + 1)"
+          [class.bg-blue-500]="currentPage === (i + 1)"
+          [class.text-white]="currentPage === (i + 1)"
+          class="px-3 py-1 rounded-md bg-gray-300 hover:bg-gray-400"
+        >
+          {{ i + 1 }}
+        </button>
+      </ng-container>
+  
+      <button 
+        (click)="nextPage()" 
+        [disabled]="currentPage === totalPages"
+        class="px-3 py-1 rounded-md bg-gray-300 hover:bg-gray-400 disabled:opacity-50"
+      >
+        Next
+      </button>
+    </div>
+  </div>
+  

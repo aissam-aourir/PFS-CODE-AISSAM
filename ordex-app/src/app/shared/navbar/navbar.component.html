@@ -1,0 +1,68 @@
+<!-- Navbar -->
+<nav class="flex justify-between items-center p-4 bg-white shadow-md sticky top-0 z-50 px-10">
+    <ul class="flex space-x-6 text-gray-700 font-medium items-center">
+        <img src="../../../assets/logo2.png" alt="Logo" class="h-16 mr-8 ml-5">
+        <li><a routerLink="/home/main" class="hover:text-orange-500">Home</a></li>
+        <li class="hover:text-orange-500">About Us</li>
+        <li><a routerLink="/home/products" class="hover:text-orange-500">More Products</a></li>
+
+  
+      </ul>
+      
+     <ul class="flex space-x-6 text-gray-700 font-medium">
+       
+      <ng-container *ngIf="authService.isUserAuthenticated() && !authService.hasRole('ADMIN') && !authService.hasRole('SUPPLIER')">
+        <li class="relative cursor-pointer mt-2">
+          <div routerLink="/home/cart" class="text-gray-700 hover:text-orange-500 flex items-center">
+            <i class="fas fa-shopping-cart text-2xl"></i>
+            <span
+              *ngIf="cartItemCount > 0"
+              class="absolute -top-2 -right-2 bg-red-600 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center"
+            >
+              {{ cartItemCount }}
+            </span>
+          </div>
+        </li>
+      </ng-container>
+      
+          
+      <ul class="flex space-x-6 text-gray-700 font-medium">
+        <ng-container *ngIf="authService.isUserAuthenticated() && !authService.hasRole('ADMIN') && !authService.hasRole('SUPPLIER'); else guestLinks">
+            <!-- Profile dropdown (for regular users only) -->
+            <div class="relative" (clickOutside)="showDropdown = false">
+              <button
+                class="bg-orange-100 text-orange-700 px-4 py-2 rounded-full flex items-center space-x-2 hover:bg-orange-200 transition"
+                (click)="showDropdown = !showDropdown"
+              >
+                <i class="fas fa-user-circle text-lg"></i>
+                <span class="font-medium">{{ authService.email }}</span>
+                <svg class="w-4 h-4 transform transition-transform" [class.rotate-180]="showDropdown" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+          
+              <div
+                *ngIf="showDropdown"
+                class="absolute right-0 mt-2 w-40 bg-white rounded-lg shadow-lg border z-50"
+              >
+                <button
+                  (click)="logout()"
+                  class="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100"
+                >
+                  Logout
+                </button>
+              </div>
+            </div>
+          </ng-container>
+          
+      
+        <ng-template #guestLinks>
+          <li><a routerLink="/login" class="text-orange-500 hover:underline">Login</a></li>
+          <li><a routerLink="/register" class="text-orange-500 hover:underline">Register</a></li>
+        </ng-template>
+      </ul>
+      
+      
+      
+    </ul>
+  </nav>

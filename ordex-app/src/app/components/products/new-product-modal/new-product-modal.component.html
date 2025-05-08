@@ -1,0 +1,52 @@
+<div class="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 z-50" *ngIf="isOpen">
+    <div class="bg-white p-6 rounded-lg w-1/2 min-h-[50vh] overflow-y-auto shadow-lg transition-all transform">
+      <h3 class="text-2xl font-semibold mb-4">Create New Product</h3>
+      <form (ngSubmit)="onSubmit()" [formGroup]="productForm">
+  
+        <!-- Product Name and Category side by side -->
+        <div class="grid grid-cols-2 gap-4 mb-4">
+          <div>
+            <label for="name" class="block text-sm font-medium text-gray-700">Product Name</label>
+            <input id="name" type="text" formControlName="name" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-yellow-500">
+          </div>
+          <div>
+            <label for="category" class="block text-sm font-medium text-gray-700">Category</label>
+            <select id="category" formControlName="category" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-yellow-500">
+              <option *ngFor="let category of categories" [value]="category.id">{{ category.name }}</option>
+            </select>
+          </div>
+        </div>
+  
+        <!-- Description full width -->
+        <div class="mb-4">
+          <label for="description" class="block text-sm font-medium text-gray-700">Description</label>
+          <textarea id="description" formControlName="description" rows="3" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-yellow-500"></textarea>
+        </div>
+  
+        <!-- Price and Stock side by side -->
+        <div class="grid grid-cols-2 gap-4 mb-4">
+          <div>
+            <label for="price" class="block text-sm font-medium text-gray-700">Price</label>
+            <input id="price" type="number" formControlName="price" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-yellow-500">
+          </div>
+          <div>
+            <label for="stock" class="block text-sm font-medium text-gray-700">Stock</label>
+            <input id="stock" type="number" formControlName="stock" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-yellow-500">
+          </div>
+        </div>
+  
+        <!-- Image URL full width -->
+        <div class="mb-4">
+          <label for="imageURL" class="block text-sm font-medium text-gray-700">Image URL</label>
+          <input id="imageURL" type="url" formControlName="imageURL" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-yellow-500">
+        </div>
+  
+        <!-- Buttons -->
+        <div class="flex justify-end ">
+          <button type="button" (click)="closeModal()" class="bg-gray-500 text-white px-4 py-2 rounded-md hover:bg-gray-600 mr-2">Cancel</button>
+          <button type="submit" [disabled]="productForm.invalid" class="bg-yellow-500 text-white px-4 py-2 rounded-md hover:bg-yellow-600">Save Product</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  

@@ -1,0 +1,82 @@
+<div class="min-h-screen bg-gray-50 px-4 md:px-20 py-12">
+    <!-- Back to Cart -->
+    <div class="mb-6">
+      <a routerLink="/home/cart" class="text-orange-500 hover:underline flex items-center gap-1">
+        <i class="fas fa-arrow-left"></i> Back to Cart
+      </a>
+    </div>
+    <h1 class="text-4xl font-bold mb-10 text-center text-gray-800">
+        🛒 Ready to Make It Yours? Place Your <span class="text-orange-500">Order Now!</span>
+      </h1>
+      
+      
+  
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
+      <!-- Form Section -->
+      <div class="lg:col-span-2 bg-white rounded-xl shadow-lg p-8 space-y-6">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-4">Contact & Payment Details</h2>
+  
+        <form (ngSubmit)="submitOrder()" #checkoutForm="ngForm" class="space-y-6">
+          <!-- Phone -->
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
+            <div class="relative">
+              <i class="fas fa-phone absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
+              <input
+                type="text"
+                name="phone"
+                required
+                [(ngModel)]="phone"
+                class="w-full pl-10 border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-orange-400"
+              />
+            </div>
+          </div>
+  
+          <!-- Payment Method -->
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Payment Method</label>
+            <div class="flex items-center space-x-6">
+              <label class="flex items-center space-x-2">
+                <input type="radio" name="payment" [(ngModel)]="paymentMethod" value="cod" required />
+                <span>Cash on Delivery</span>
+              </label>
+              <label class="flex items-center space-x-2">
+                <input type="radio" name="payment" [(ngModel)]="paymentMethod" value="online" required />
+                <span>Online Payment</span>
+              </label>
+            </div>
+          </div>
+  
+          <button
+            type="submit"
+            [disabled]="!checkoutForm.form.valid"
+            class="w-full bg-orange-500 hover:bg-orange-600 text-white py-3 rounded-lg text-lg font-semibold transition"
+          >
+            Confirm Order
+          </button>
+        </form>
+  
+
+      </div>
+  
+      <!-- Order Summary -->
+      <div class="bg-white shadow-lg rounded-xl p-6 h-fit sticky top-24">
+        <h2 class="text-2xl font-semibold mb-4 text-gray-800">Order Summary</h2>
+        <div class="space-y-2 text-gray-600">
+          <div class="flex justify-between">
+            <span>Total Items:</span>
+            <span>{{ totalItems }}</span>
+          </div>
+          <div class="flex justify-between">
+            <span>Total Price:</span>
+            <span class="text-gray-800 font-semibold">${{ totalPrice | number : '1.2-2' }}</span>
+          </div>
+          <div class="flex justify-between">
+            <span>Shipping:</span>
+            <span class="text-green-600 font-medium">Free</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

@@ -1,0 +1,32 @@
+<div class="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 z-50" *ngIf="isOpen">
+    <div class="bg-white p-6 rounded-lg w-1/3 max-h-[80vh] overflow-hidden shadow-lg transition-all transform flex flex-col">
+      <h3 class="text-2xl font-semibold mb-4">Manage Categories</h3>
+  
+      <form (ngSubmit)="onSubmit()" [formGroup]="categoryForm" class="mb-4">
+        <div class="flex space-x-2">
+          <input type="text" formControlName="name" placeholder="New Category Name" class="border px-4 py-2 rounded-md w-full">
+          <button type="submit" [disabled]="categoryForm.invalid" class="bg-yellow-500 text-white px-4 py-2 rounded-md">Add</button>
+        </div>
+      </form>
+  
+      <!-- Scrollable area -->
+      <div class="overflow-y-auto flex-1">
+        <div *ngIf="errorMessage" class="bg-red-100 text-red-700 p-2 rounded-md mb-4">
+            {{ errorMessage }}
+        </div>
+        <ul>
+          <li *ngFor="let category of categories" class="flex justify-between items-center py-2 border-b">
+            <span>{{ category.name }}</span>
+            <button  (click)="categoryDeleted.emit(category.id)"  class="hover:text-red-600 text-red-500 p-2 rounded-md">
+                <i class="fas fa-trash-alt text-xl"></i> <!-- Delete icon -->
+              </button>
+         </li>
+        </ul>
+      </div>
+  
+      <div class="flex justify-end mt-4">
+        <button (click)="closeModal()" class="bg-gray-500 text-white px-4 py-2 rounded-md hover:bg-gray-600">Close</button>
+      </div>
+    </div>
+  </div>
+  

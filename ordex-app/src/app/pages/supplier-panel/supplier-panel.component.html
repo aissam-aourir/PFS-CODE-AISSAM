@@ -1,0 +1,46 @@
+<div class="flex h-screen">
+  <!-- Sidebar -->
+  <nav class="w-64 bg-gray-800 text-white p-5 flex flex-col">
+    <!-- Logo -->
+    <div class="flex items-center justify-center mb-6">
+      <img src="../../../assets/logo2.png" alt="Logo" class="h-20">
+    </div>
+
+    <!-- Supplier Username Display -->
+    <div class="text-center text-lg font-semibold text-gray-200 mb-8">
+      <p>{{ username }}</p>
+    </div>
+
+    <!-- Sidebar Menu -->
+    <ul class="space-y-4 flex-1">
+      <li>
+        <a routerLink="dashboard" routerLinkActive="text-yellow-400 bg-gray-700" class="block px-4 py-2 rounded-md hover:bg-gray-700">
+          Dashboard
+        </a>
+      </li>
+      <li>
+        <a routerLink="products" routerLinkActive="text-yellow-400 bg-gray-700" class="block px-4 py-2 rounded-md hover:bg-gray-700">
+          Products
+        </a>
+      </li>
+    </ul>
+
+    <!-- Log Out Button -->
+    <div class="mt-auto text-center">
+      <button (click)="logout()" class="w-full bg-red-700 hover:bg-red-800 text-white py-2 rounded-md flex items-center justify-center space-x-2">
+        <i class="fas fa-sign-out-alt"></i>
+        <span>Log Out</span>
+      </button>
+    </div>
+
+    <!-- Sidebar Footer -->
+    <div class="mt-4 text-center text-sm text-gray-500">
+      <p>© 2025 Ordex. All rights reserved.</p>
+    </div>
+  </nav>
+
+  <!-- Main Content Area -->
+  <div class="flex-1 bg-gray-100 p-6">
+    <router-outlet></router-outlet>
+  </div>
+</div>
